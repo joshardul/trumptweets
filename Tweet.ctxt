@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=Tweet
+comment0.text=\n\ Represents\ a\ Tweet\n\n\ @author\ Noah\ Krueger\ and\ Shardul\ Joshi\n\ @version\ 1\n
+comment1.params=
+comment1.target=Tweet()
+comment2.params=t\ tp\ l
+comment2.target=Tweet(java.lang.String,\ java.lang.String,\ java.lang.String)
+comment3.params=
+comment3.target=java.lang.String\ toString()
+numComments=4
