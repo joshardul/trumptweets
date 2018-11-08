@@ -15,7 +15,7 @@ public class TrumpTweets
     {
         Scanner input = new Scanner(System.in);
         int numTweets;
-        
+        System.out.println("Welcome to TrumpTweets");
         do
         {
             System.out.println("How many of Donald Trump's tweets would you like to see? (1 - 10)");
