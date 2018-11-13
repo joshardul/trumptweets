@@ -20,8 +20,8 @@ public class TrumpTweets
         {
             System.out.println("How many of Donald Trump's tweets would you like to see? (1 - 10)");
             numTweets = input.nextInt();
-            WebScraper.getTweets(numTweets);
         }
         while (numTweets > 10 || numTweets < 1);
+        WebScraper.getTweets(numTweets);
     }
 }

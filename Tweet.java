@@ -17,6 +17,18 @@ public class Tweet
         timePosted = tp;
         likes = l;
     }
+    public String getText()
+    {
+        return text;
+    }
+    public String getTime()
+    {
+        return timePosted;
+    }
+    public String getLikes()
+    {
+        return likes;
+    }
     public String toString()
     {
         return "a tweet";

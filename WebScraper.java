@@ -27,22 +27,35 @@ public class WebScraper
                 html+=inputLine + "\n";
             }
             in.close();
-            int endIndex = html.indexOf("<div id=\"timeline\"");
-            int startIndex;
-            String text,datePosted,likes;
+            int endIndex = 0;
+            int startIndex = 0;
+            String text, timePosted, likes;
             for (int i = 0; i < n; i++)
             {
-                startIndex = html.indexOf("<span aria-hidden", endIndex);
-                startIndex = html.indexOf("<span class=\"u-hiddenVisually", startIndex);
-                startIndex = html.indexOf(">", startIndex);
+                String startTarget = "data-long-form=\"true\" aria-hidden=\"true\">";
+                int startTargetLen = startTarget.length();
+                startIndex = html.indexOf(startTarget, endIndex);
                 endIndex = html.indexOf("<", startIndex);
-                datePosted = html.substring(startIndex+1, endIndex);
-                System.out.println(datePosted);
+                timePosted = html.substring(startIndex + startTargetLen, endIndex);
                 
-                startIndex = html.indexOf("<div class=\"js-tweet-text-container", endIndex);
-                endIndex = html.indexOf("</div>", startIndex);
+                endIndex = startIndex;
+                startTarget = "<p class=\"TweetTextSize TweetTextSize--normal js-tweet-text tweet-text\" lang=\"en\" data-aria-label-part=\"0\">";
+                startTargetLen = startTarget.length();
+                startIndex = html.indexOf(startTarget, endIndex);
+                System.out.println(html.substring(startIndex, startIndex + 50));
+                endIndex = html.indexOf("<", startIndex);
+                text = html.substring(startIndex, endIndex);
                 
-                tweets[i] = new Tweet();
+                /*startTarget = "<span class=\"ProfileTweet-actionCount\" data-tweet-stat-count=\"";
+                startTargetLen = startTarget.length();
+                startIndex = html.indexOf(startTarget, endIndex);
+                endIndex = html.indexOf("\">", startIndex);
+                likes = html.substring(startIndex, endIndex);*/
+                
+                System.out.println(timePosted);
+                System.out.println(text);
+                //System.out.println(likes);
+                //tweets[i] = new Tweet(text, timePosted, likes);
             }
         }
         catch(FileNotFoundException ex)

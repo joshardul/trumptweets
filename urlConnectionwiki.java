@@ -47,7 +47,7 @@ public class urlConnectionwiki {
                 c = Character.toUpperCase(lastName.charAt(0));
                 lastName = c + lastName.substring(1);
                     
-                String wikiPage = "https://twitter.com/realDonaldTrump?ref_src=twsrc%5Eappleosx%7Ctwcamp%5Esafari%7Ctwgr%5Eprofile";
+                String wikiPage = "https://twitter.com/realDonaldTrump";
                 URL wiki = new URL(wikiPage);
                 URLConnection yc = wiki.openConnection();
                 BufferedReader in = new BufferedReader(new InputStreamReader(
