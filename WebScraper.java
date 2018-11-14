@@ -11,68 +11,96 @@ import java.util.Scanner;
 
 public class WebScraper
 {
-    public static Tweet[] getTweets(int n)
+    private Tweet[] tweets;
+    private String url;
+    public WebScraper()
     {
-        Tweet[] tweets = new Tweet[n];
-        String twitterPage = "https://twitter.com/realDonaldTrump";
+        this("https://twitter.com/realDonaldTrump");//default twitter page
+    }
+    public WebScraper(String u)
+    {
+        if(!u.equals("") && u.contains("twitter"))//making sure the url is not null and is a twitter link
+        {
+            url = u;
+        }
+        else
+        {
+            url = "https://twitter.com/realDonaldTrump";
+        }
+    }
+    public void getTweets(int n)
+    {
+        tweets = new Tweet[n];//creates an array of objects (tweets)
         try
         {
-            URL twitter = new URL(twitterPage);
-            URLConnection yc = twitter.openConnection();
+            URL twitter = new URL(url);//establishes the url
+            URLConnection yc = twitter.openConnection();//connects to twitter
             BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
             String inputLine = "";
             String html = "";
-            while ((inputLine = in.readLine()) != null)
+            while ((inputLine = in.readLine()) != null)//copys over the entire html to a string
             {
                 html+=inputLine + "\n";
             }
-            in.close();
+            in.close();//closes scanner
             int endIndex = 0;
             int startIndex = 0;
-            String text, timePosted, likes;
-            for (int i = 0; i < n; i++)
+            String text, timePosted, likes;//the data we are extracting
+            String startTarget;
+            int startTargetLen;
+            for (int i = 0; i < n; i++)//does this for each tweet object
             {
-                String startTarget = "data-long-form=\"true\" aria-hidden=\"true\">";
-                int startTargetLen = startTarget.length();
+                startTarget = "data-long-form=\"true\" aria-hidden=\"true\">";//targets right before the time posted
+                startTargetLen = startTarget.length();//used to add to get the exact spot before the time
                 startIndex = html.indexOf(startTarget, endIndex);
-                endIndex = html.indexOf("<", startIndex);
-                timePosted = html.substring(startIndex + startTargetLen, endIndex);
+                endIndex = html.indexOf("<", startIndex);//closest closing tag
+                timePosted = html.substring(startIndex + startTargetLen, endIndex);//stores the extracted string
                 
-                endIndex = startIndex;
                 startTarget = "<p class=\"TweetTextSize TweetTextSize--normal js-tweet-text tweet-text\" lang=\"en\" data-aria-label-part=\"0\">";
-                startTargetLen = startTarget.length();
-                startIndex = html.indexOf(startTarget, endIndex);
-                System.out.println(html.substring(startIndex, startIndex + 50));
-                endIndex = html.indexOf("<", startIndex);
+                startTargetLen = startTarget.length();//same logic as abouve
+                startIndex = html.indexOf(startTarget, endIndex) + startTargetLen;
+                endIndex = html.indexOf("</span><span class=\"tco-ellipsis\">", startIndex);
                 text = html.substring(startIndex, endIndex);
+                int gunkIndex1, gunkIndex2;//tweet text can have links and stuff, so remove that
+                while (text.indexOf("<") != -1)
+                {
+                    gunkIndex1 = text.indexOf("<");
+                    gunkIndex2 = text.indexOf(">") + 1;
+                    text = text.substring(0, gunkIndex1) + text.substring(gunkIndex2);
+                }
                 
-                /*startTarget = "<span class=\"ProfileTweet-actionCount\" data-tweet-stat-count=\"";
+                startTarget = "<span class=\"ProfileTweet-action--favorite u-hiddenVisually\">";
+                startTargetLen = startTarget.length();//same logic as above
+                startIndex = html.indexOf(startTarget, endIndex) + startTargetLen;
+                startTarget = "data-aria-label-part>";
                 startTargetLen = startTarget.length();
-                startIndex = html.indexOf(startTarget, endIndex);
-                endIndex = html.indexOf("\">", startIndex);
-                likes = html.substring(startIndex, endIndex);*/
+                startIndex = html.indexOf(startTarget, startIndex) + startTargetLen;
+                endIndex = html.indexOf("<", startIndex);
+                likes = html.substring(startIndex, endIndex);
                 
-                System.out.println(timePosted);
-                System.out.println(text);
-                //System.out.println(likes);
-                //tweets[i] = new Tweet(text, timePosted, likes);
+                tweets[i] = new Tweet(text, timePosted, likes);//encapsulates all information into a object
             }
         }
-        catch(FileNotFoundException ex)
+        catch(FileNotFoundException ex)//catches unknown exeption
         {
-            System.out.println("unknown");
-            return null;
+            System.out.println("Unknown");
         }
-        catch(MalformedURLException e)
+        catch(MalformedURLException e)//cathches bad url exeption
         {
-            System.out.println("badly formed url exception occurred");
-            return null;
+            System.out.println("Badly formed url exception occurred");
         }
-        catch(IOException e)
+        catch(IOException e)//cathins io exeptions
         {
             System.out.println("IO exception occurred");
-            return null;
-        }  
-        return tweets;
+        }
+    }
+    public String toString()
+    {
+        String returnThis = "";
+        for (int i = 0; i < tweets.length; i++)//returns the information about the string utilizing weet tostring
+        {
+            returnThis += tweets[i].toString() + "\n\n";
+        }
+        return returnThis;
     }
 }

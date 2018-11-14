@@ -21,7 +21,7 @@ public class Tweet
     {
         return text;
     }
-    public String getTime()
+    public String getTimePosted()
     {
         return timePosted;
     }
@@ -31,6 +31,6 @@ public class Tweet
     }
     public String toString()
     {
-        return "a tweet";
+        return text + "\nTime Posted: " + timePosted + "\nLikes: " + likes;
     }
 }
