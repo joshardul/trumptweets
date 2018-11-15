@@ -23,7 +23,7 @@ public class TrumpTweets
             {
                 numTweets = input.nextInt();
             }
-            catch(Exception InputMismatchException)//makes sure to catch the exeption and not break the program
+            catch(Exception InputMismatchException) //makes sure to catch the exception and not break the program
             {
                 System.out.println("Please enter a valid integer input betweem 1 and 3.");
                 numTweets = 0;
@@ -31,9 +31,10 @@ public class TrumpTweets
             }
         }
         while (numTweets > 3 || numTweets < 1);
+        System.out.println();
         WebScraper w = new WebScraper("https://twitter.com/realDonaldTrump");//creates webscraper object
-        w.getTweets(numTweets);//uses webscraper function
-        System.out.println(w);//utilizes tostring 
+        w.getTweets(numTweets); //uses webscraper function
+        System.out.println(w); //utilizes toString 
         System.out.println("Thanks for using TrumpTweets! See you for your next Trump dosage soon.");
     }
 }

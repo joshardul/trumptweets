@@ -1,5 +1,11 @@
 #BlueJ class context
 comment0.target=WebScraper
-comment1.params=n
-comment1.target=Tweet[]\ getTweets(int)
-numComments=2
+comment1.params=
+comment1.target=WebScraper()
+comment2.params=u
+comment2.target=WebScraper(java.lang.String)
+comment3.params=n
+comment3.target=void\ getTweets(int)
+comment4.params=
+comment4.target=java.lang.String\ toString()
+numComments=5
