@@ -51,7 +51,7 @@ public class WebScraper
             int startTargetLen;
             for (int i = 0; i < n; i++) //does this for each tweet object
             {
-                startTarget = "data-long-form=\"true\" aria-hidden=\"true\">";//targets right before the time posted
+                startTarget = "data-long-form=\"true\" aria-hidden=\"true\">"; //targets right before the time posted
                 startTargetLen = startTarget.length(); //used to add to get the exact spot before the time
                 startIndex = html.indexOf(startTarget, endIndex);
                 endIndex = html.indexOf("<", startIndex); //closest closing tag
@@ -60,7 +60,7 @@ public class WebScraper
                 startTarget = "<p class=\"TweetTextSize TweetTextSize--normal js-tweet-text tweet-text\" lang=\"en\" data-aria-label-part=\"0\">";
                 startTargetLen = startTarget.length(); //same logic as abouve
                 startIndex = html.indexOf(startTarget, endIndex) + startTargetLen;
-                endIndex = html.indexOf("</span><span class=\"tco-ellipsis\">", startIndex);
+                endIndex = html.indexOf("</p>", startIndex);
                 text = html.substring(startIndex, endIndex);
                 int gunkIndex1, gunkIndex2;
                 //tweet text can have links and stuff, so remove that
@@ -110,10 +110,10 @@ public class WebScraper
     }
     public String toString()
     {
-        String returnThis = "";
+        String returnThis = "------------------------------------------------------------------------------\n";
         for (int i = 0; i < tweets.length; i++) //returns the information about the string utilizing weet tostring
         {
-            returnThis += tweets[i].toString() + "\n\n";
+            returnThis += tweets[i].toString() + "\n------------------------------------------------------------------------------\n";
         }
         return returnThis;
     }
